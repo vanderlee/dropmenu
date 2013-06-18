@@ -47,17 +47,22 @@
 			$(function() {
 				$('#insert').dropmenu({
 					items: [
-						{ name: 'red', label: 'Red' },
-						{ name: 'blue' },
-						{ name: 'other',
-						  selectable: false,
-						  items: [
-							  { name: 'green' },
-							  { name: 'lime' }
-						  ]
+						{	name:	'red',	label: 'Red' },
+						{	name:	'blue' },
+						{	name:	'other',
+							items:	function(item, callback) {
+										callback([
+											function(items, callback) {
+												callback({ name:	'green' });
+											},
+											{	name:	'lime' }
+										]);
+									}
 						}
 					],
-					select: insertText
+					select: insertText,
+					showAnim: 'fadeIn',
+					duraction: 'slow'
 				});
 			});
 		</script>
