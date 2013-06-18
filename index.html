@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>jQuery Dropmenu</title>
+
+		<!-- jQuery/jQueryUI (hosted) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.js"></script>
+
+		<!-- Dropmenu -->
+		<script src="jquery.dropmenu.js"></script>
+		<link href="jquery.dropmenu.css" rel="stylesheet" type="text/css"/>
+
+		<style>
+			body {
+				font-family: "Segoe UI", Verdana, Helvetica, Arial, sans-serif;
+				font-size: 11px;
+			}
+		</style>
+		
+		<script>
+			function insertAtCursor(element, value) {
+				if (document.selection) {
+					element.focus();
+					sel = document.selection.createRange();
+					sel.text = value;
+				} else {
+					if (element.selectionStart || element.selectionStart == '0') {
+						var startPos = element.selectionStart;
+						var endPos = element.selectionEnd;
+						element.value = element.value.substring(0, startPos)
+							+ value
+							+ element.value.substring(endPos, element.value.length);
+						element.focus();
+						element.selectionStart = startPos + value.length;
+					} else {
+						element.value += value;
+					}
+				}
+			}
+
+			function insertText(event, item) {
+				insertAtCursor($('#textarea')[0], item.name);
+			}
+
+			$(function() {
+				$('#insert').dropmenu({
+					items: [
+						{ name: 'red', label: 'Red' },
+						{ name: 'blue' },
+						{ name: 'other',
+						  selectable: false,
+						  items: [
+							  { name: 'green' },
+							  { name: 'lime' }
+						  ]
+						}
+					],
+					select: insertText
+				});
+			});
+		</script>
+    </head>
+    <body>
+		<h1>jQuery Dropmenu</h1>
+		<textarea id="textarea" rows="15" cols="70">Beyond here there be monsters.</textarea><br/>
+		<input type="button" id="insert" value="insert" />
+    </body>
+</html>
