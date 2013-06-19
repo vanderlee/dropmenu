@@ -40,7 +40,8 @@
 
 			// Click outside to close
             $(document).delegate('html', 'touchstart click', function (event) {
-				if (event.target !== that.element[0] && !$(event.target).closest($(that.menu)).is(that.menu)) {
+				if (!$(event.target).closest(that.element).is(that.element)
+				 && !$(event.target).closest(that.menu).is(that.menu)) {
 					that.close();
 				}
             });
