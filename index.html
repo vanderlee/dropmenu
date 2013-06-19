@@ -47,18 +47,25 @@
 			$(function() {
 				$('#insert').dropmenu({
 					items: [
-						{	name:	'red',	label: 'Red' },
-						{	name:	'blue' },
+						{	name:	'red',	label: '<b>Red</b> is what <u>this</u> color shall be!' },
+						{	name:	'pink' },
+						{	name:	'cyan' },
 						{	name:	'other',
 							items:	function(item, callback) {
 										callback([
 											function(items, callback) {
 												callback({ name:	'green' });
 											},
-											{	name:	'lime' }
+											{	name:	'lime' },
+
+											{	name:	'azure' }
 										]);
 									}
-						}
+						},
+						{	name:	'turquoise' },
+						{	name:	'brown' },
+						{	name:	'vermillion' },
+						{	name:	'blue' }
 					],
 					select: insertText,
 					showAnim: 'fadeIn',
@@ -69,7 +76,7 @@
     </head>
     <body>
 		<h1>jQuery Dropmenu</h1>
-		<textarea id="textarea" rows="15" cols="70">Beyond here there be monsters.</textarea><br/>
+		<textarea id="textarea" rows="3" cols="70">Beyond here there be monsters.</textarea><br/>
 		<input type="button" id="insert" value="insert" />
     </body>
 </html>

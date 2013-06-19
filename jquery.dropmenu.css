@@ -4,15 +4,29 @@
     display:			none;
     border:				solid 1px WindowFrame;
     background-color:	white;
-    width:				200px;
-    box-shadow:			0 2px 4px rgba(0,0,0,.25);
+    box-shadow:			0 .2em .4em rgba(0, 0, 0, .25);
+}
+
+.dropdown-content {
+	min-height:			1.4em;		/* height + padding-top + padding-bottom of .dropmenu-item */
+	max-height:			7em;		/* 5 * min-height */
+    min-width:			5em;
+	max-width:			10em;
+	overflow:			hidden;
+	overflow-y:			auto;
 }
 
 .dropmenu-item {
-    padding:			2px;
-    overflow:			hidden;
+    padding:			.2em 15px .2em .4em;
+	height:				1em;
+	overflow:			hidden;
+	white-space:		nowrap;
     text-overflow:		ellipsis;
 	color:				GrayText;
+}
+
+.dropmenu-item:hover {
+	background-color:	Scrollbar;
 }
 
 .dropmenu-item.dropmenu-selectable {
@@ -26,5 +40,5 @@
 }
 
 .dropmenu-parent {
-    background:			url('images/parent.png') no-repeat 99% 50%;
+    background:			url('images/parent.png') no-repeat 98% 50%;
 }

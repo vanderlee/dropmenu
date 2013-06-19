@@ -31,7 +31,7 @@
 
             that.widgetEventPrefix = 'dropmenu';
 			
-            that.menu = null;
+            that.menu		= null;
 
             that.element.click(function(e) {
                 e.preventDefault();
@@ -40,7 +40,8 @@
 
 			// Click outside to close
             $(document).delegate('html', 'touchstart click', function (event) {
-				if (event.target !== that.element[0] && !$(event.target).closest($(that.menu)).is(that.menu)) {
+				if (!$(event.target).closest(that.element).is(that.element)
+				 && !$(event.target).closest(that.menu).is(that.menu)) {
 					that.close();
 				}
             });
@@ -66,15 +67,32 @@
 		},
 
 		open: function() {
-			if (!this.menu) {
-				this.menu = $('<div class="dropmenu"/>').hide().appendTo('body');
-				this._addItems(this.menu, this.options.items);
-
-				this._show(this.menu.position({
-					'of':	this.element,
+			var that = this,
+				items,
+				content;
+			
+			if (!that.menu) {				
+				that.menu = $('<div class="dropmenu"/>').hide().appendTo('body');
+				that.menu.position({
+					'of':	that.element,
 					'my':	'left top',
 					'at':	'left bottom'
-				}));
+				});
+
+				content = $('<div class="dropdown-content"/>').appendTo(that.menu);
+				
+				if ($.isFunction(that.options.items)) {
+					if (items = that.options.items.call(that, that, function(items) {
+						that._addItems(content, items);
+						that._show(that.menu);
+					})) {
+						that._addItems(content, items);
+						that._show(that.menu);
+					}
+				} else {
+					that._addItems(content, that.options.items);
+					that._show(that.menu);
+				}
 			}
 		},
 
@@ -91,35 +109,44 @@
 		_addItem: function(menu, item) {
 			var that		= this,
 				label		= item.label || item.name,
-				row			= $('<div class="dropmenu-item">'+label+'</div>').appendTo(menu),
+				row			= $('<div class="dropmenu-item"/>').html(label).appendTo(menu),
 				selectable	= item.selectable ? item.selectable	: (item.items ? false : true),
 				submenu,
-				items;
+				items,
+				content;
+
+			row.mouseenter(function () {
+				if (this.offsetWidth < this.scrollWidth && !row.attr('title')) {
+					row.attr('title', row.text());
+				}
+			});
 		
 			if (item.items) {
-				row.addClass('dropmenu-parent');
-				submenu = $('<div class="dropmenu"/>').appendTo(row);
-
-				row.hover(function() {
+				row.addClass('dropmenu-parent').hover(function() {
+					submenu = $('<div class="dropmenu"/>').appendTo(row);
 					submenu.css({
-						'left': row.outerWidth(),
-						'top': row.position().top
+                        'left':	row.outerWidth(),
+                        'top':	row.position().top
 					}).empty();
+
+					content = $('<div class="dropdown-content"/>').appendTo(submenu);
 
 					if ($.isFunction(item.items)) {
 						if (items = item.items.call(this, item, function(items) {
-							that._addItems(submenu, items);
+							that._addItems(content, items);
 							that._show(submenu);
 						})) {
-							that._addItems(submenu, items);
+							that._addItems(content, items);
 							that._show(submenu);
 						}
 					} else {
-						that._addItems(submenu, item.items);
+						that._addItems(content, item.items);
 						that._show(submenu);
 					}
 				}, function() {
-					that._hide(submenu);
+					that._hide(submenu, function() {
+						submenu.remove();
+					});					
 				});
 			}
 
