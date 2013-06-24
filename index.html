@@ -40,12 +40,12 @@
 				}
 			}
 
-			function insertText(event, item) {
+			function insertText(item) {
 				insertAtCursor($('#textarea')[0], item.name);
 			}
 
 			function renderImage(item) {
-				return '<img style="width:100%;margin:.5em 0;" src="'+item.image+'" alt="'+item.name+'" title="'+item.name+'"/>';
+				return '<img style="margin:.5em 20px .5em 0;" src="'+item.image+'" alt="'+item.name+'" title="'+item.name+'"/>';
 			}
 
 			$(function() {
@@ -83,14 +83,45 @@
 					],
 					select: insertText,
 					showAnim: 'fadeIn',
-					duraction: 'slow'
+					duration: 'slow'
+				});
+
+				$('#winners').dropmenu({
+					items:		[
+									{	name: 'alien',		image: 'demo/alien.png'	},
+									{	name: 'superhero',	image: 'demo/superhero.png'	},
+									{	name: 'guy',		image: 'demo/guy.png'	},
+									{	name: 'ninja',		image: 'demo/ninja.png'	},
+									{	name: 'robot',		image: 'demo/robot.png'	},
+									{	name: 'trekkie',	image: 'demo/trekkie.png'	}
+								],
+					render:		renderImage,
+					showAnim:	'slideDown',
+					duration:	'fast',
+					select:		function(item) {
+									$('#winners').attr('src', item.image);
+								}
+
 				});
 			});
 		</script>
     </head>
     <body>
 		<h1>jQuery Dropmenu</h1>
+		Simple, flexible and stylish dropdown menu for jQuery/jQueryUI.
+		<h2>Features</h2>
+		<ul>
+			<li>Short and sweet (less than 200 lines of code).</li>
+			<li>Basic styling, easily changed.</li>
+			<li>Optional scrollbar.</li>
+			<li>Anything as content.</li>
+		</ul>
+		<h2>Examples</h2>
+		<h3>many features + functionality</h3>
+		Click on the button to select a text to insert at the caret&hellip;<br/>
 		<textarea id="textarea" rows="3" cols="70">Beyond here there be monsters.</textarea><br/>
 		<input type="button" id="insert" value="insert" />
+		<h3>Image with image selection</h3>
+		<img id="winners" class="button" src="demo/alien.png"/>
     </body>
 </html>

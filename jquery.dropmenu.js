@@ -50,11 +50,11 @@
             return that;
         },
 
-		_show: function(element) {
+		_show: function(element, callback) {
 			if ($.effects && $.effects.effect[this.options.showAnim]) {
-				element.show(this.options.showAnim, this.options.showOptions, this.options.duration);
+				element.show(this.options.showAnim, this.options.showOptions, this.options.duration, callback);
 			} else {
-				element[this.options.showAnim || "show"](this.options.showAnim ? this.options.duration : null);
+				element[this.options.showAnim || "show"](this.options.showAnim ? this.options.duration : null, callback);
 			}
 		},
 
@@ -75,26 +75,15 @@
 			
 			if (!that.menu) {				
 				that.menu = $('<div class="dropmenu"/>').hide().appendTo('body');
-				that.menu.position({
-					'of':	that.element,
-					'my':	'left top',
-					'at':	'left bottom'
-				});
-
 				content = $('<div class="dropdown-content"/>').appendTo(that.menu);
-				
-				if ($.isFunction(that.options.items)) {
-					if (items = that.options.items.call(that, that, function(items) {
-						that._addItems(content, items);
-						that._show(that.menu);
-					})) {
-						that._addItems(content, items);
-						that._show(that.menu);
-					}
-				} else {
-					that._addItems(content, that.options.items);
-					that._show(that.menu);
-				}
+				that._addItemSource(that, content, that.options.items, function() {					
+					that._show(that.menu.position({
+						'of':			that.element,
+						'my':			'left top',
+						'at':			'left bottom',
+						'collision':	'flipfit'
+					}));
+				});
 			}
 		},
 
@@ -119,7 +108,6 @@
 				text		= render? '' : row.text(),
 				selectable	= item.selectable ? item.selectable	: (item.items ? false : true),
 				submenu,
-				items,
 				content;
 
 			if (text !== '') {
@@ -132,26 +120,16 @@
 		
 			if (item.items) {
 				row.addClass('dropmenu-parent').hover(function() {
-					submenu = $('<div class="dropmenu"/>').appendTo(row);
-					submenu.css({
-						'left':	row.outerWidth(),
-						'top':	row.position().top
-					});
-
+					submenu = $('<div class="dropmenu"/>').hide().appendTo(row);
 					content = $('<div class="dropdown-content"/>').appendTo(submenu);
-
-					if ($.isFunction(item.items)) {
-						if (items = item.items.call(this, item, function(items) {
-							that._addItems(content, items);
-							that._show(submenu);
-						})) {
-							that._addItems(content, items);
-							that._show(submenu);
-						}
-					} else {
-						that._addItems(content, item.items);
-						that._show(submenu);
-					}
+					that._addItemSource(item, content, item.items, function() {
+						that._show(submenu.css('visibility', 'hidden').show().position({
+							'of':			row,
+							'my':			'left top',
+							'at':			'right top',
+							'collision':	'flipfit'
+						}).hide().css('visibility', ''));
+					});
 				}, function() {
 					var oldSubmenu = submenu;
 					that._hide(oldSubmenu, function() {
@@ -164,10 +142,11 @@
 				row.addClass('dropmenu-selectable');
 				row.click(function() {
 					if ($.isFunction(item.select)) {
-						item.select.call(this, item);
+						item.select(item);
 					}
-					that._trigger('select', null, item);
-
+					if ($.isFunction(that.options.select)) {
+						that.options.select(item);
+					}
 					if (that.options.closeOnSelect) {
 						that.close();
 					}
@@ -175,9 +154,25 @@
 			}
 		},
 
+		_addItemSource: function(parent, menu, items, callback) {
+			var that = this,
+				returned;
+			if ($.isFunction(items)) {
+				if (returned = items(parent, function(items) {
+					that._addItems(menu, items);
+					callback();
+				})) {
+					that._addItems(menu, returned);
+					callback();
+				}
+			} else {
+				that._addItems(menu, items);
+				callback();
+			}
+		},
+
 		_addItems: function(menu, items) {
 			var that = this;
-
 			$.each(items, function(index, item) {
 				if ($.isFunction(item)) {
 					if (item = item.call(this, item, function(item) {

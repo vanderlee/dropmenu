@@ -21,7 +21,8 @@ items
 		[	name:	"#ff0000",		// required
 			label:	"Red",			// optional
 			selectable: true,		// can option be selected (default false if subitems, otherwise true)
-			items: [...]			// optional (recursive structure)
+			items: [...],			// optional (recursive structure)
+			render:	callback		// optional callback to render the item. Gets item as first argument
 		]
 
 	Optionally, each items and/or item definition may be a callback.
@@ -37,6 +38,9 @@ items
 	The order of items will be undefined (though may be sorted in a parent
 	callback).
 
+render
+	Optional fallback render callback (if not specified with item) to render the items.
+
 showAnim
 showOptions
 duration
@@ -46,3 +50,9 @@ Events
 ------
 select
 	Callback
+
+Future
+------
+*Close upon second click of element
+*Close upon hiding/destruction of element (handle dialogs closing while open)
+*Test explicit (manual) open/close
