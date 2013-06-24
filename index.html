@@ -44,6 +44,10 @@
 				insertAtCursor($('#textarea')[0], item.name);
 			}
 
+			function renderImage(item) {
+				return '<img style="width:100%;margin:.5em 0;" src="'+item.image+'" alt="'+item.name+'" title="'+item.name+'"/>';
+			}
+
 			$(function() {
 				$('#insert').dropmenu({
 					items: [
@@ -56,7 +60,7 @@
 											function(items, callback) {
 												callback({ name:	'green' });
 											},
-											{	name:	'lime' },
+											{	name:	'lime', label: '<span style="background-color:lime;font-size:150%;">Lime</span>' },
 
 											{	name:	'azure' }
 										]);
@@ -65,6 +69,16 @@
 						{	name:	'turquoise' },
 						{	name:	'brown' },
 						{	name:	'vermillion' },
+						{	label:	'<i>Ultimate</i> winner&hellip;',
+							items:	[
+								{	name: 'alien',		render: renderImage,	image: 'demo/alien.png'	},
+								{	name: 'superhero',	render: renderImage,	image: 'demo/superhero.png'	},
+								{	name: 'guy',		render: renderImage,	image: 'demo/guy.png'	},
+								{	name: 'ninja',		render: renderImage,	image: 'demo/ninja.png'	},
+								{	name: 'robot',		render: renderImage,	image: 'demo/robot.png'	},
+								{	name: 'trekkie',	render: renderImage,	image: 'demo/trekkie.png'	}
+							]
+						},
 						{	name:	'blue' }
 					],
 					select: insertText,

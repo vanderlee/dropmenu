@@ -22,6 +22,7 @@
 			'showAnim':			'show',
 			'duration':			'normal',
 			'showOptions':		{},
+			'render':			undefined,
 
 			'select':			undefined
         },
@@ -109,18 +110,25 @@
 
 		_addItem: function(menu, item) {
 			var that		= this,
-				label		= item.label || item.name,
-				row			= $('<div class="dropmenu-item"/>').html(label).appendTo(menu),
+				label		= item.label || item.name || '',
+				render		= $.isFunction(item.render) ? item.render
+							: $.isFunction(that.options.render) ? that.options.render
+							: undefined,
+				html		= render? render(item) : label,
+				row			= $('<div class="dropmenu-item"/>').html(html).appendTo(menu),
+				text		= render? '' : row.text(),
 				selectable	= item.selectable ? item.selectable	: (item.items ? false : true),
 				submenu,
 				items,
 				content;
 
-			row.mouseenter(function () {
-				if (this.offsetWidth < this.scrollWidth && !row.attr('title')) {
-					row.attr('title', row.text());
-				}
-			});
+			if (text !== '') {
+				row.mouseenter(function () {
+					if (this.offsetWidth < this.scrollWidth && !row.attr('title')) {
+						row.attr('title', text);
+					}
+				});
+			}
 		
 			if (item.items) {
 				row.addClass('dropmenu-parent').hover(function() {

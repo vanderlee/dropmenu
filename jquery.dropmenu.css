@@ -9,7 +9,7 @@
 
 .dropdown-content {
 	min-height:			1.4em;		/* height + padding-top + padding-bottom of .dropmenu-item */
-	max-height:			21em;		/* 5 * min-height */
+	max-height:			28em;		/* 5 * min-height */
     min-width:			5em;
 	max-width:			25em;
 	overflow:			hidden;
@@ -17,8 +17,7 @@
 }
 
 .dropmenu-item {
-    padding:			.2em 15px .2em .4em;
-	height:				1em;
+    padding:			.2em .4em;
 	overflow:			hidden;
 	white-space:		nowrap;
     text-overflow:		ellipsis;
@@ -40,5 +39,6 @@
 }
 
 .dropmenu-parent {
+    padding-right:		15px;
     background:			url('images/parent.png') no-repeat 98% 50%;
 }
