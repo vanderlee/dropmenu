@@ -58,6 +58,7 @@
 		},
 
 		_hide: function(element, callback) {
+			element.stop(true,true);
 			if ($.effects && ($.effects.effect[this.options.showAnim] || $.effects[this.options.showAnim])) {
 				element.hide(this.options.showAnim, this.options.showOptions, this.options.duration, callback);
 			} else {
@@ -125,9 +126,9 @@
 				row.addClass('dropmenu-parent').hover(function() {
 					submenu = $('<div class="dropmenu"/>').appendTo(row);
 					submenu.css({
-                        'left':	row.outerWidth(),
-                        'top':	row.position().top
-					}).empty();
+						'left':	row.outerWidth(),
+						'top':	row.position().top
+					});
 
 					content = $('<div class="dropdown-content"/>').appendTo(submenu);
 
@@ -144,8 +145,9 @@
 						that._show(submenu);
 					}
 				}, function() {
-					that._hide(submenu, function() {
-						submenu.remove();
+					var oldSubmenu = submenu;
+					that._hide(oldSubmenu, function() {
+						oldSubmenu.remove();
 					});					
 				});
 			}
