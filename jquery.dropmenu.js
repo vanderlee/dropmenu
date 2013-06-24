@@ -59,7 +59,7 @@
 		},
 
 		_hide: function(element, callback) {
-			element.stop(true,true);
+			element.stop();
 			if ($.effects && ($.effects.effect[this.options.showAnim] || $.effects[this.options.showAnim])) {
 				element.hide(this.options.showAnim, this.options.showOptions, this.options.duration, callback);
 			} else {
