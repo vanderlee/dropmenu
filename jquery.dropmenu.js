@@ -35,7 +35,6 @@
             that.menu		= null;
 
             that.element.click(function(e) {
-                e.preventDefault();
 				that.toggle();
             });
 
