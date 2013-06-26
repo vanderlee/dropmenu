@@ -103,25 +103,94 @@
 								}
 
 				});
+
+				$('#features-menu').dropmenu({
+					items:		function() {
+									return $.map($('#features-items > *'), function(item) {
+										return {
+											name:	$(item).text(),
+											label:	$(item).html()
+										};
+									});
+								},
+					duration:	0,
+					select:		function(item) { alert(item.name); }
+				});
+
+				$('#hidden-menu').dropmenu({
+					items:		function() {
+									return $.map($('#hidden-items > *'), function(item) {
+										return {
+											name:	$(item).attr('title') || $(item).text(),
+											label:	$("<div />").append($(item).clone()).html()
+										};
+									});
+								},
+					select:		function(item) { alert(item.name); }
+				});
+				$('#toggle-hidden-items').click(function() {
+					$('#hidden-items').toggle();
+				});
+
+				$('#select-menu').dropmenu({
+					items:		function() {
+									return $.map($('#select-items > *'), function(item) {
+										return {
+											name:	$(item).val(),
+											label:	$(item).text()
+										};
+									});
+								},
+					select:		function(item) { alert(item.name); }
+				});
+				$('#toggle-select-items').click(function() {
+					$('#select-items').toggle();
+				});
 			});
 		</script>
     </head>
     <body>
 		<h1>jQuery Dropmenu</h1>
 		Simple, flexible and stylish dropdown menu for jQuery/jQueryUI.
+
 		<h2>Features</h2>
-		<ul>
+		<ul id="features-items">
 			<li>Short and sweet (less than 200 lines of code).</li>
 			<li>Basic styling, easily changed.</li>
 			<li>Optional scrollbar.</li>
 			<li>Anything as content.</li>
 		</ul>
+
 		<h2>Examples</h2>
+
 		<h3>many features + functionality</h3>
 		Click on the button to select a text to insert at the caret&hellip;<br/>
-		<textarea id="textarea" rows="3" cols="70">Beyond here there be monsters.</textarea><br/>
-		<input type="button" id="insert" value="insert" />
+		<textarea id="textarea" rows="3" cols="40">Beyond here there be monsters.</textarea><br/>
+		<input type="button" id="insert" value="Click to insert something&hellip;"/>
+
 		<h3>Image with image selection</h3>
 		<img id="winners" class="button" src="demo/alien.png"/>
+
+		<h3>Items from a list</h3>
+		<input type="button" id="features-menu" value="Click to list features&hellip;"/>
+
+		<h3>Items from hidden HTML</h3>
+		<button id="hidden-menu">Click to list these HTML items&hellip;</button>
+		<button id="toggle-hidden-items">Toggle hidden items</button>
+		<div id="hidden-items" style="display:none;">
+			<i title="Ninja versus robot"><img src="demo/ninja.png" width="16" height="16"/> versus <img src="demo/robot.png" width="16" height="16"/></i>
+			<span>This is some plain text</span>
+			<div style="border: dashed thin red">Bordered?</div>
+		</div>
+
+		<h3>Items from hidden select</h3>
+		<button id="select-menu">Click to list items in hidden select&hellip;</button>
+		<button id="toggle-select-items">Toggle hidden select</button>
+		<select id="select-items" style="display:none;">
+			<option value="open">Open</option>
+			<option value="save">Save</option>
+			<option value="saveas">Save as&hellip;</option>
+			<option value="quit">Quit</option>
+		</select>
     </body>
 </html>

@@ -53,6 +53,6 @@ select
 
 Future
 ------
-*Close upon second click of element
 *Close upon hiding/destruction of element (handle dialogs closing while open)
 *Test explicit (manual) open/close
+*Include HTML-item-parsers in code

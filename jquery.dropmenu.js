@@ -36,7 +36,7 @@
 
             that.element.click(function(e) {
                 e.preventDefault();
-				that.open();
+				that.toggle();
             });
 
 			// Click outside to close
@@ -68,12 +68,16 @@
 			}
 		},
 
+		toggle: function() {
+			this[this.menu ? 'close' : 'open']();
+		},
+
 		open: function() {
 			var that = this,
 				items,
 				content;
 			
-			if (!that.menu) {				
+			if (!that.menu) {
 				that.menu = $('<div class="dropmenu"/>').hide().appendTo('body');
 				content = $('<div class="dropdown-content"/>').appendTo(that.menu);
 				that._addItemSource(that, content, that.options.items, function() {					
@@ -88,11 +92,13 @@
 		},
 
 		close: function() {
-			var that = this;
+			var that = this,
+				menu = that.menu;
+
 			if (that.menu) {
-				that._hide(that.menu, function() {
-					that.menu.remove();
-					that.menu = null;
+				that.menu = null;
+				that._hide(menu, function() {
+					menu.remove();
 				});
 			}
 		},
