@@ -31,7 +31,7 @@
 			var that = this;
 
             that.widgetEventPrefix = 'dropmenu';
-			
+
             that.menu		= null;
 
             that.element.click(function(e) {
@@ -39,7 +39,7 @@
             });
 
 			// Click outside to close
-            $(document).delegate('html', 'touchstart click', function (event) {
+            $(document).mousedown(function (event) {
 				if (!$(event.target).closest(that.element).is(that.element)
 				 && !$(event.target).closest(that.menu).is(that.menu)) {
 					that.close();
@@ -75,11 +75,11 @@
 			var that = this,
 				items,
 				content;
-			
+
 			if (!that.menu) {
 				that.menu = $('<div class="dropmenu"/>').hide().appendTo('body');
 				content = $('<div class="dropdown-content"/>').appendTo(that.menu);
-				that._addItemSource(that, content, that.options.items, function() {					
+				that._addItemSource(that, content, that.options.items, function() {
 					that._show(that.menu.position({
 						'of':			that.element,
 						'my':			'left top',
@@ -122,7 +122,7 @@
 					}
 				});
 			}
-		
+
 			if (item.items) {
 				row.addClass('dropmenu-parent').hover(function() {
 					submenu = $('<div class="dropmenu"/>').hide().appendTo(row);
@@ -139,7 +139,7 @@
 					var oldSubmenu = submenu;
 					that._hide(oldSubmenu, function() {
 						oldSubmenu.remove();
-					});					
+					});
 				});
 			}
 
