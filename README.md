@@ -3,7 +3,7 @@ dropmenu
 
 Basic multi-level dropdown menu for buttons.
 
-Copyright (c) 2013 Martijn W. van der Lee
+Copyright (c) 2013-2014 Martijn W. van der Lee
 Licensed under the MIT.
 
 Requires jQuery and jQueryUI (not tested with old versions, but it doesn't use
