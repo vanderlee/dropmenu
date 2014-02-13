@@ -4,7 +4,7 @@
 /*
  * Dropmenu
  *
- * Copyright (c) 2013-2014 Martijn W. van der Lee
+ * Copyright (c) 2013 Martijn W. van der Lee
  * Licensed under the MIT.
  *
  * Requires jQuery and jQueryUI.
@@ -27,34 +27,27 @@
 			'select':			undefined
         },
 
-		_handle_mousedown: null,
-
         _create: function () {
 			var that = this;
 
-            this.widgetEventPrefix = 'dropmenu';
+            that.widgetEventPrefix = 'dropmenu';
 
-            this.menu		= null;
+            that.menu		= null;
 
-            this.element.click(function(e) {
+            that.element.click(function(e) {
 				that.toggle();
             });
 
-			this._handle_mousedown = function(event) {
-				if (!that.element.is(event.target) && that.element.has(event.target).length === 0) {
+			// Click outside to close
+            $(document).mousedown(function (event) {
+				if (!$(event.target).closest(that.element).is(that.element)
+				 && !$(event.target).closest(that.menu).is(that.menu)) {
 					that.close();
 				}
-			};
+            });
 
-			// Click outside to close
-            $(document).on('mousedown', this._handle_mousedown);
-
-            return this;
+            return that;
         },
-
-		_destroy: function() {
-			$(document).off('mousedown', this._handle_mousedown);
-		},
 
 		_show: function(element, callback) {
 			if ($.effects && $.effects.effect[this.options.showAnim]) {
@@ -83,10 +76,10 @@
 				items,
 				content;
 
-			if (!this.menu) {
-				this.menu = $('<div class="dropmenu"/>').hide().appendTo('body');
-				content = $('<div class="dropdown-content"/>').appendTo(this.menu);
-				this._addItemSource(this, content, this.options.items, function() {
+			if (!that.menu) {
+				that.menu = $('<div class="dropmenu"/>').hide().appendTo('body');
+				content = $('<div class="dropdown-content"/>').appendTo(that.menu);
+				that._addItemSource(that, content, that.options.items, function() {
 					that._show(that.menu.position({
 						'of':			that.element,
 						'my':			'left top',
@@ -98,11 +91,12 @@
 		},
 
 		close: function() {
-			var menu = this.menu;
+			var that = this,
+				menu = that.menu;
 
-			if (this.menu) {
-				this.menu = null;
-				this._hide(menu, function() {
+			if (that.menu) {
+				that.menu = null;
+				that._hide(menu, function() {
 					menu.remove();
 				});
 			}
@@ -112,7 +106,7 @@
 			var that		= this,
 				label		= item.label || item.name || '',
 				render		= $.isFunction(item.render) ? item.render
-							: $.isFunction(this.options.render) ? this.options.render
+							: $.isFunction(that.options.render) ? that.options.render
 							: undefined,
 				html		= render? render(item) : label,
 				row			= $('<div class="dropmenu-item"/>').html(html).appendTo(menu),
