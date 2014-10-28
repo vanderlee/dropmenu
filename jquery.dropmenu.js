@@ -26,28 +26,36 @@
 
 			'select':			undefined
         },
+		
+		_handle_mousedown: null,
 
         _create: function () {
 			var that = this;
 
-            that.widgetEventPrefix = 'dropmenu';
+            this.widgetEventPrefix = 'dropmenu';
 
-            that.menu		= null;
+            this.menu		= null;
 
-            that.element.click(function(e) {
+            this.element.click(function(e) {
 				that.toggle();
             });
-
-			// Click outside to close
-            $(document).mousedown(function (event) {
+			
+			this._handle_mousedown = function(event) {
 				if (!$(event.target).closest(that.element).is(that.element)
 				 && !$(event.target).closest(that.menu).is(that.menu)) {
 					that.close();
 				}
-            });
+			};
+			
+			// Click outside to close
+            $(document).on('mousedown', this._handle_mousedown);
 
-            return that;
+            return this;
         },
+		
+		_destroy: function() {
+			$(document).off('mousedown', this._handle_mousedown);
+		},
 
 		_show: function(element, callback) {
 			if ($.effects && $.effects.effect[this.options.showAnim]) {
@@ -76,10 +84,10 @@
 				items,
 				content;
 
-			if (!that.menu) {
-				that.menu = $('<div class="dropmenu"/>').hide().appendTo('body');
-				content = $('<div class="dropdown-content"/>').appendTo(that.menu);
-				that._addItemSource(that, content, that.options.items, function() {
+			if (!this.menu) {
+				this.menu = $('<div class="dropmenu"/>').hide().appendTo('body');
+				content = $('<div class="dropdown-content"/>').appendTo(this.menu);
+				this._addItemSource(this, content, this.options.items, function() {
 					that._show(that.menu.position({
 						'of':			that.element,
 						'my':			'left top',
@@ -92,11 +100,11 @@
 
 		close: function() {
 			var that = this,
-				menu = that.menu;
+				menu = this.menu;
 
-			if (that.menu) {
-				that.menu = null;
-				that._hide(menu, function() {
+			if (this.menu) {
+				this.menu = null;
+				this._hide(menu, function() {
 					menu.remove();
 				});
 			}
@@ -106,7 +114,7 @@
 			var that		= this,
 				label		= item.label || item.name || '',
 				render		= $.isFunction(item.render) ? item.render
-							: $.isFunction(that.options.render) ? that.options.render
+							: $.isFunction(this.options.render) ? this.options.render
 							: undefined,
 				html		= render? render(item) : label,
 				row			= $('<div class="dropmenu-item"/>').html(html).appendTo(menu),

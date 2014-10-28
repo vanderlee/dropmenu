@@ -1,10 +1,11 @@
-dropmenu
-========
-
-Basic multi-level dropdown menu for buttons.
+jQuery Dropmenu
+===============
+Version v1.0.1
 
 Copyright (c) 2013-2014 Martijn W. van der Lee
 Licensed under the MIT.
+
+Basic multi-level dropdown menu for buttons.
 
 Requires jQuery and jQueryUI (not tested with old versions, but it doesn't use
 any really new features. Tested with 1.9's).

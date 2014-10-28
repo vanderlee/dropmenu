@@ -9,7 +9,7 @@
 
 .dropdown-content {
 	min-height:			1.4em;		/* height + padding-top + padding-bottom of .dropmenu-item */
-	max-height:			28em;		/* 5 * min-height */
+	max-height:			42em;		/* 5 * min-height */
     min-width:			1em;
 	max-width:			25em;
 	overflow:			hidden;
