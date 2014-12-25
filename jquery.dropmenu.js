@@ -4,7 +4,7 @@
 /*
  * Dropmenu
  *
- * Copyright (c) 2013 Martijn W. van der Lee
+ * Copyright (c) 2013-2014 Martijn W. van der Lee
  * Licensed under the MIT.
  *
  * Requires jQuery and jQueryUI.
