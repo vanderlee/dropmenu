@@ -1,56 +1,93 @@
-jQuery Dropmenu
+jQuery.dropmenu
 ===============
-Version v1.0.1
+v1.0.2
 
-Copyright (c) 2013-2014 Martijn W. van der Lee
+Copyright &copy; 2013-2014 Martijn W. van der Lee (http://martijn.vanderlee.com).
 Licensed under the MIT.
 
 Basic multi-level dropdown menu for buttons.
 
-Requires jQuery and jQueryUI (not tested with old versions, but it doesn't use
-any really new features. Tested with 1.9's).
+Styled according to operating system.
+
+Features
+--------
+-	Unlimited sub menus
+-	Render any content
+-	Styling matches operating system/browser look
+-	Optional scrollbar
+-	Short and sweet; just over 200 lines of cleanly written code
+
+Download
+--------
+jQuery v1.6.0 or higher required.
+
+jQueryUI v1.9.0 or higher required (stylesheet not necessary).
+
+Current version: https://github.com/vanderlee/dropmenu/archive/master.zip
+
+Sourcecode on Github: https://github.com/vanderlee/dropmenu
+
+Documentation
+=============
+`.dropmenu(options)`
+--------------------
+Turns an element into a dropmenu.
+Any element may be used.
 
 Options
 -------
-closeOnSelect
-	Close menu when clicking on a selectable item (default is true)
+### closeOnSelect (true)
+Close menu when clicking on a selectable item
 
-items
-	Array of items to display in the menu.
+### duration ('normal')
+See jQueryUI datepicker
 
-	Structure is as such:
-		[	name:	"#ff0000",		// required
-			label:	"Red",			// optional
-			selectable: true,		// can option be selected (default false if subitems, otherwise true)
-			items: [...],			// optional (recursive structure)
-			render:	callback		// optional callback to render the item. Gets item as first argument
-		]
+### items
+Array of items to display in the menu.
 
-	Optionally, each items and/or item definition may be a callback.
+Structure is as such:
 
-	For items, the callback receives the parent item and a callback. In case
-	of synchronous generation, simply return an array of items, if using async,
-	like an ajax call, call the callback with an array of items when finished.
+	[	value:		"#ff0000",	// optional
+		label:		"Red",		// optional
+		selectable: true,		// can option be selected (default false if subitems, otherwise true)
+		items:		[...],		// optional (recursive)
+		render:		callback,	// optional callback to render the item. Gets item as first argument
+		name:		"#ff0000"	// deprecated, replaced by `value`
+	]
 
-	Each individual item can also be a callback. Same rules apply as for items,
-	but this time a single item object must be returned.
+Optionally, each items and/or item definition may be a callback.
 
-	You can both return a normal array and use the return callback if you wish.
-	The order of items will be undefined (though may be sorted in a parent
-	callback).
+Additional key-value pairs may be added. These are ignored by the dropmenu
+plug-in, but may be used by the `render` callbacks.
 
-render
-	Optional fallback render callback (if not specified with item) to render the items.
+For items, the callback receives the parent item and a callback. In case
+of synchronous generation, simply return an array of items, if using async,
+like an ajax call, call the callback with an array of items when finished.
 
-showAnim
-showOptions
-duration
-	See jQueryUI datepicker.
+Each individual item can also be a callback. Same rules apply as for items,
+but this time a single item object must be returned.
+
+You can both return a normal array and use the return callback if you wish.
+The order of items will be undefined (though may be sorted in a parent
+callback).
+
+### render (undefined)
+Optional fallback `render` callback, if no `render` callback specified for the
+individual item, to render the items' HTML.
+If no `render` callback is specified, the label of the item will be used.
+The `render` callback will receive the entire item structure as it's first and
+only argument.
+
+### showAnim ('show')
+See jQueryUI datepicker
+
+### showOptions ({})
+See jQueryUI datepicker
 
 Events
 ------
-select
-	Callback
+### select (undefined)
+Callback
 
 Future
 ------
