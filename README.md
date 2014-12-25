@@ -5,16 +5,19 @@ v1.0.2
 Copyright &copy; 2013-2014 Martijn W. van der Lee (http://martijn.vanderlee.com).
 Licensed under the MIT.
 
-Basic multi-level dropdown menu for buttons.
+Tree dropdown menu with native look and feel, user-defined item
+rendering and unlimited items and depth.
 
 Styled according to operating system.
 
 Features
 --------
--	Unlimited sub menus
--	Render any content
+-	Render any HTML content
+-	Unlimited items and submenus
 -	Styling matches operating system/browser look
 -	Optional scrollbar
+-	Submenus optionally selectable
+-	Regenerate items every time
 -	Short and sweet; just over 200 lines of cleanly written code
 
 Download
@@ -49,7 +52,7 @@ Structure is as such:
 
 	[	value:		"#ff0000",	// optional
 		label:		"Red",		// optional
-		selectable: true,		// can option be selected (default false if subitems, otherwise true)
+		selectable: false,		// can option be selected (default false if subitems, otherwise true)
 		items:		[...],		// optional (recursive)
 		render:		callback,	// optional callback to render the item. Gets item as first argument
 		name:		"#ff0000"	// deprecated, replaced by `value`
