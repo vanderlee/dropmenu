@@ -48,13 +48,13 @@
 			};
 			
 			// Click outside to close
-            $(document).on('mousedown', this._handle_mousedown);
+            $(document).bind('mousedown', this._handle_mousedown);
 
             return this;
         },
 		
 		_destroy: function() {
-			$(document).off('mousedown', this._handle_mousedown);
+			$(document).unbind('mousedown', this._handle_mousedown);
 		},
 
 		_show: function(element, callback) {
