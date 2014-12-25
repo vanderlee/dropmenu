@@ -17,12 +17,12 @@
 
     $.widget("vanderlee.dropmenu", {
 		options: {
-            'items':			[],
 			'closeOnSelect':	true,
-			'showAnim':			'show',
 			'duration':			'normal',
-			'showOptions':		{},
+            'items':			[],
 			'render':			undefined,
+			'showAnim':			'show',
+			'showOptions':		{},
 
 			'select':			undefined
         },
@@ -112,7 +112,7 @@
 
 		_addItem: function(menu, item) {
 			var that		= this,
-				label		= item.label || item.name || '',
+				label		= item.label || item.value || item.name || '',
 				render		= $.isFunction(item.render) ? item.render
 							: $.isFunction(this.options.render) ? this.options.render
 							: undefined,
