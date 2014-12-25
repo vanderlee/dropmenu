@@ -82,7 +82,8 @@
 		open: function() {
 			var that = this,
 				items,
-				content;
+				content,
+				element;
 
 			if (!this.menu) {
 				this.menu = $('<div class="dropmenu"/>').hide().appendTo('body');
@@ -95,6 +96,11 @@
 						'collision':	'flipfit'
 					}));
 				});
+				
+				element = content.get(0);
+				if (element.offsetWidth > element.clientWidth) {
+					content.css('width', element.offsetWidth + (element.offsetWidth - element.clientWidth) + 1);
+				}
 			}
 		},
 
@@ -117,12 +123,13 @@
 							: $.isFunction(this.options.render) ? this.options.render
 							: undefined,
 				html		= render? render(item) : label,
-				row			= $('<div class="dropmenu-item"/>').html(html).appendTo(menu),
+				row			= $('<div class="dropmenu-item"/>').html(html).appendTo(menu),				
 				text		= render? '' : row.text(),
 				selectable	= item.selectable ? item.selectable	: (item.items ? false : true),
 				submenu,
-				content;
-
+				content,
+				element;
+			
 			if (text !== '') {
 				row.mouseenter(function () {
 					if (this.offsetWidth < this.scrollWidth && !row.attr('title')) {
@@ -132,22 +139,29 @@
 			}
 
 			if (item.items) {
-				row.addClass('dropmenu-parent').hover(function() {
-					submenu = $('<div class="dropmenu"/>').hide().appendTo(row);
-					content = $('<div class="dropdown-content"/>').appendTo(submenu);
-					that._addItemSource(item, content, item.items, function() {
-						that._show(submenu.css('visibility', 'hidden').show().position({
-							'of':			row,
-							'my':			'left top',
-							'at':			'right top',
-							'collision':	'flipfit'
-						}).hide().css('visibility', ''));
-					});
-				}, function() {
-					var oldSubmenu = submenu;
-					that._hide(oldSubmenu, function() {
-						oldSubmenu.remove();
-					});
+				row.addClass('dropmenu-parent').bind({
+					mouseenter: function() {
+						submenu = $('<div class="dropmenu"/>').hide().appendTo(row);
+						content = $('<div class="dropdown-content"/>').appendTo(submenu);												
+						that._addItemSource(item, content, item.items, function() {
+							that._show(submenu.css('visibility', 'hidden').show().position({
+								'of':			row,
+								'my':			'left top',
+								'at':			'right top',
+								'collision':	'flipfit'
+							}).hide().css('visibility', ''));
+						});
+						element = content.get(0);
+						if (element.offsetWidth > element.clientWidth) {
+							content.css('width', element.offsetWidth + (element.offsetWidth - element.clientWidth) + 1);
+						}						
+					},
+					mouseleave: function() {
+						var oldSubmenu = submenu;
+						that._hide(oldSubmenu, function() {
+							oldSubmenu.remove();
+						});
+					}
 				});
 			}
 

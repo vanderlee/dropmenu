@@ -1,0 +1,43 @@
+{
+	"name": "jqdropmenu",
+	"version": "1.0.2",
+	"title": "Vanderlee Dropmenu",
+	"description": "Tree dropdown menu with native look and feel, user-defined item rendering and unlimited items and depth.",
+	"author": {
+			"name": "Martijn van der Lee",
+			"url": "http://martijn.vanderlee.com",
+			"email": "martijn@vanderlee.com"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://opensource.org/licenses/MIT"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vanderlee/dropmenu.git"
+	},
+	"dependencies": {
+		"jquery": ">=1.6.0",
+		"jqueryui": ">=1.9.0"
+	},
+	"homepage": "http://vanderlee.github.com/dropmenu",
+	"demo": "http://vanderlee.github.com/dropmenu",
+	"download":"https://github.com/vanderlee/dropmenu",
+	"bugs": "https://github.com/vanderlee/dropmenu/issues",
+	"maintainers": [
+		{
+			"name": "Martijn van der Lee",
+			"url": "http://martijn.vanderlee.com",
+			"email": "martijn@vanderlee.com"
+		}
+	],
+	"keywords": [
+		"jquery",
+		"dropmenu",
+		"dropdown",
+		"select",
+		"tree"
+	]
+}

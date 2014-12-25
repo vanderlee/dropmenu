@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>jQuery Dropmenu</title>
+
+		<!-- jQuery/jQueryUI (hosted) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.js"></script>
+
+		<!-- Dropmenu -->
+		<script src="jquery.dropmenu.js"></script>
+		<link href="jquery.dropmenu.css" rel="stylesheet" type="text/css"/>
+
+		<style>
+			body {
+				font-family: "Segoe UI", Verdana, Helvetica, Arial, sans-serif;
+				font-size: 11px;
+			}
+		</style>
+		
+		<script>
+			function insertAtCursor(element, value) {
+				if (document.selection) {
+					element.focus();
+					sel = document.selection.createRange();
+					sel.text = value;
+				} else {
+					if (element.selectionStart || element.selectionStart == '0') {
+						var startPos = element.selectionStart;
+						var endPos = element.selectionEnd;
+						element.value = element.value.substring(0, startPos)
+							+ value
+							+ element.value.substring(endPos, element.value.length);
+						element.focus();
+						element.selectionStart = startPos + value.length;
+					} else {
+						element.value += value;
+					}
+				}
+			}
+
+			function insertText(item) {
+				insertAtCursor($('#textarea')[0], item.name);
+			}
+
+			function renderImage(item) {
+				return '<img style="margin:.5em 20px .5em 0;" src="'+item.image+'" alt="'+item.name+'" title="'+item.name+'"/>';
+			}
+
+			$(function() {
+				$('#insert').dropmenu({
+					items: [
+						{	name:	'red',	label: '<b>Red</b> is what <u>this</u> color shall be!' },
+						{	name:	'pink' },
+						{	name:	'cyan' },
+						{	name:	'other',
+							items:	function(item, callback) {
+										callback([
+											function(items, callback) {
+												callback({ name:	'green' });
+											},
+											{	name:	'lime', label: '<span style="background-color:lime;font-size:150%;">Lime</span>' },
+											{	name:	'azure' }
+										]);
+									}
+						},
+						{	name:	'turquoise' },
+						{	name:	'brown' },
+						{	name:	'vermillion' },
+						{	label:	'<i>Ultimate</i> winner&hellip;',
+							items:	[
+								{	name: 'alien',		render: renderImage,	image: 'demo/alien.png'	},
+								{	name: 'superhero',	render: renderImage,	image: 'demo/superhero.png'	},
+								{	name: 'guy',		render: renderImage,	image: 'demo/guy.png'	},
+								{	name: 'ninja',		render: renderImage,	image: 'demo/ninja.png'	},
+								{	name: 'robot',		render: renderImage,	image: 'demo/robot.png'	},
+								{	name: 'trekkie',	render: renderImage,	image: 'demo/trekkie.png'	}
+							]
+						},
+						{	name:	'blue' }
+					],
+					select: insertText,
+					showAnim: 'fadeIn',
+					duration: 'slow'
+				});
+
+				$('#winners').dropmenu({
+					items:		[
+									{	name: 'alien',		image: 'demo/alien.png'	},
+									{	name: 'superhero',	image: 'demo/superhero.png'	},
+									{	name: 'guy',		image: 'demo/guy.png'	},
+									{	name: 'ninja',		image: 'demo/ninja.png'	},
+									{	name: 'robot',		image: 'demo/robot.png'	},
+									{	name: 'trekkie',	image: 'demo/trekkie.png'	}
+								],
+					render:		renderImage,
+					showAnim:	'slideDown',
+					duration:	'fast',
+					select:		function(item) {
+									$('#winners').attr('src', item.image);
+								}
+
+				});
+
+				$('#features-menu').dropmenu({
+					items:		function() {
+									return $.map($('#features-items > *'), function(item) {
+										return {
+											name:	$(item).text(),
+											label:	$(item).html()
+										};
+									});
+								},
+					duration:	0,
+					select:		function(item) { alert(item.name); }
+				});
+
+				$('#hidden-menu').dropmenu({
+					items:		function() {
+									return $.map($('#hidden-items > *'), function(item) {
+										return {
+											name:	$(item).attr('title') || $(item).text(),
+											label:	$("<div />").append($(item).clone()).html()
+										};
+									});
+								},
+					select:		function(item) { alert(item.name); }
+				});
+				$('#toggle-hidden-items').click(function() {
+					$('#hidden-items').toggle();
+				});
+
+				$('#select-menu').dropmenu({
+					items:		function() {
+									return $.map($('#select-items > *'), function(item) {
+										return {
+											name:	$(item).val(),
+											label:	$(item).text()
+										};
+									});
+								},
+					select:		function(item) { alert(item.name); }
+				});
+				$('#toggle-select-items').click(function() {
+					$('#select-items').toggle();
+				});
+			});
+		</script>
+    </head>
+    <body>
+		<h1>jQuery Dropmenu demos</h1>
+		<h2>Features</h2>
+		<ul id="features-items">
+			<li>Short and sweet (less than 200 lines of cleanly written code).</li>
+			<li>Basic styling, easily changed.</li>
+			<li>Optional scrollbar.</li>
+			<li>Anything as content.</li>
+		</ul>
+
+		<h2>Examples</h2>
+
+		<h3>many features + functionality</h3>
+		Click on the button to select a text to insert at the caret&hellip;<br/>
+		<textarea id="textarea" rows="3" cols="40">Beyond here there be monsters.</textarea><br/>
+		<input type="button" id="insert" value="Click to insert something&hellip;"/>
+
+		<hr/>
+		
+		<h3>Image with image selection</h3>
+		<img id="winners" class="button" src="demo/alien.png"/>
+
+		<hr/>
+		
+		<h3>Items from a list</h3>
+		<input type="button" id="features-menu" value="Click to list features&hellip;"/>
+
+		<hr/>
+		
+		<h3>Items from hidden HTML</h3>
+		<button id="hidden-menu">Click to list these HTML items&hellip;</button>
+		<button id="toggle-hidden-items">Toggle hidden items</button>
+		<div id="hidden-items" style="display:none;">
+			<i title="Ninja versus robot"><img src="demo/ninja.png" width="16" height="16"/> versus <img src="demo/robot.png" width="16" height="16"/></i>
+			<span>This is some plain text</span>
+			<div style="border: dashed thin red">Bordered?</div>
+		</div>
+		
+		<hr/>
+		
+		<h3>Items from hidden select</h3>
+		<button id="select-menu">Click to list items in hidden select&hellip;</button>
+		<button id="toggle-select-items">Toggle hidden select</button>
+		<select id="select-items" style="display:none;">
+			<option value="open">Open</option>
+			<option value="save">Save</option>
+			<option value="saveas">Save as&hellip;</option>
+			<option value="quit">Quit</option>
+		</select>
+
+		<hr/>
+		
+		<h3>Generated items</h3>
+		<button id="generated-menu">Click to list generated items&hellip;</button>
+		<script>
+			var rendercount = 0;
+			
+			function generate_items(amount, max_depth, depth) {
+				var i,
+					items = [],
+					item;
+			
+				depth = depth || 1;
+				
+				for (i = 1; i <= amount; ++i) {
+					item = {
+						label:		'Render ' + rendercount + ', depth ' + depth + ', item ' + i,
+						selectable:	true
+					}
+
+					if (depth < max_depth) {
+						item.items = generate_items(amount * .5, max_depth, depth + 1);
+					}
+					
+					items.push(item);					
+				}
+				
+				return items;
+			}
+			
+			$(function() {				
+				$('#generated-menu').dropmenu({
+					duration:	0,
+					items:		function() {
+									++rendercount;
+									return generate_items(50, 4);
+								}
+				});
+			});
+		</script>		
+    </body>
+</html>

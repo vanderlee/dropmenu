@@ -1,0 +1,29 @@
+{
+	"name": "Vanderlee Dropmenu",
+	"version": "1.0.2",
+	"homepage": "https://github.com/vanderlee/dropmenu",
+	"authors": [
+		"Martijn van der Lee <martijn@vanderlee.com>"
+	],
+	"description": "Tree dropdown menu with native look and feel, user-defined item rendering and unlimited items and depth.",
+	"main": "jquery.dropmenu.js",
+	"keywords": [
+		"jquery",
+		"dropmenu",
+		"dropdown",
+		"select",
+		"tree"
+	],
+	"license": "MIT",
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+		"jquery": ">=1.6.0",
+		"jquery-ui": ">=1.9.0"
+	}
+}
