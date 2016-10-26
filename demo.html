@@ -145,6 +145,39 @@
 				$('#toggle-select-items').click(function() {
 					$('#select-items').toggle();
 				});
+								
+				function mapSelectInput(select) {
+					var mapOption = function(item) {
+							var $item = $(item);
+							return {
+								name:	$item.val(),
+								label:	$item.text()
+							};
+						},
+						mapOptGroup = function(group) {
+							var $group = $(group);
+							return {
+								name:	$group.attr('label'),
+								items:	$.map($group.find('>*'), function(item) {
+									return mapOption(item);
+								})
+							};
+						}
+					
+					return $.map($(select).find('>*'), function(item) {
+						return $(item).is('optgroup') ? mapOptGroup(item) : mapOption(item);
+					});
+				}								
+
+				$('#optgroup-menu').dropmenu({
+					items:		function() {
+									return mapSelectInput('#optgroup-items');
+								},
+					select:		function(item) { alert(item.name); }
+				});
+				$('#toggle-optgroup-items').click(function() {
+					$('#optgroup-items').toggle();
+				});
 			});
 		</script>
     </head>
@@ -195,6 +228,20 @@
 			<option value="open">Open</option>
 			<option value="save">Save</option>
 			<option value="saveas">Save as&hellip;</option>
+			<option value="quit">Quit</option>
+		</select>
+		
+		<hr/>
+		
+		<h3>Items from hidden select with option groups</h3>
+		<button id="optgroup-menu">Click to list items in hidden select&hellip;</button>
+		<button id="toggle-optgroup-items">Toggle hidden select</button>
+		<select id="optgroup-items" style="display:none;">
+			<optgroup label="File&hellip;">
+				<option value="open">Open</option>
+				<option value="save">Save</option>
+				<option value="saveas">Save as&hellip;</option>
+			</optgroup>
 			<option value="quit">Quit</option>
 		</select>
 
