@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>jQuery Dropmenu - Chrome CSS</title>
+
+		<!-- jQuery/jQueryUI (hosted) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.js"></script>
+
+		<!-- Dropmenu -->
+		<script src="jquery.dropmenu.js"></script>
+		<link href="jquery.dropmenu.chrome.css" rel="stylesheet" type="text/css"/>
+
+		<script>
+			function insertAtCursor(element, value) {
+				if (document.selection) {
+					element.focus();
+					sel = document.selection.createRange();
+					sel.text = value;
+				} else {
+					if (element.selectionStart || element.selectionStart == '0') {
+						var startPos = element.selectionStart;
+						var endPos = element.selectionEnd;
+						element.value = element.value.substring(0, startPos)
+								+ value
+								+ element.value.substring(endPos, element.value.length);
+						element.focus();
+						element.selectionStart = startPos + value.length;
+					} else {
+						element.value += value;
+					}
+				}
+			}
+
+			function insertText(item) {
+				insertAtCursor($('#textarea')[0], item.name);
+			}
+
+			function renderImage(item) {
+				return '<img src="' + item.image + '" alt="' + item.name + '" title="' + item.name + '"/>';
+			}
+
+			$(function () {
+				$('#insert').dropmenu({
+					items: [
+						{name: 'red', label: '<b>Red</b> is what <u>this</u> color shall be!'},
+						{name: 'pink'},
+						{name: 'Open'},
+						{name: 'File...',
+							items: function (item, callback) {
+								callback([
+									function (items, callback) {
+										callback({name: 'green'});
+									},
+									{name: 'lime', label: '<span style="background-color:lime;font-size:150%;">Lime</span>'},
+									{name: 'azure'}
+								]);
+							}
+						},
+						{name: 'turquoise'},
+						{name: 'brown'},
+						{name: 'vermillion'},
+						{label: '<i>Ultimate</i> winner&hellip;',
+							items: [
+								{name: 'alien', render: renderImage, image: 'demo/alien.png'},
+								{name: 'superhero', render: renderImage, image: 'demo/superhero.png'},
+								{name: 'guy', render: renderImage, image: 'demo/guy.png'},
+								{name: 'ninja', render: renderImage, image: 'demo/ninja.png'},
+								{name: 'robot', render: renderImage, image: 'demo/robot.png'},
+								{name: 'trekkie', render: renderImage, image: 'demo/trekkie.png'}
+							]
+						},
+						{name: 'blue'}
+					],
+					select: insertText
+				});
+			});
+		</script>
+    </head>
+    <body>
+		<h1>jQuery Dropmenu Chrome CSS</h1>
+		Click on the button to select a text to insert at the caret&hellip;<br/>
+		<textarea id="textarea" rows="3" cols="40">Beyond here there be monsters.</textarea><br/>
+		<input type="button" id="insert" value="Click to insert something&hellip;"/>
+    </body>
+</html>

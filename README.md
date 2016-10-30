@@ -1,8 +1,8 @@
 jQuery.dropmenu
 ===============
-v1.0.2
+v1.1.0
 
-Copyright &copy; 2013-2014 Martijn W. van der Lee (http://martijn.vanderlee.com).
+Copyright &copy; 2013-2016 Martijn W. van der Lee (http://martijn.vanderlee.com).
 Licensed under the MIT.
 
 Tree dropdown menu with native look and feel, user-defined item
@@ -39,11 +39,13 @@ Any element may be used.
 
 Options
 -------
-### closeOnSelect (true)
-Close menu when clicking on a selectable item
+### closeOnSelect (`true`)
+Close menu when clicking on a selectable item.
 
-### duration ('normal')
-See jQueryUI datepicker
+### duration (`0`)
+The speed at which the menu's show/hide animations run.
+
+See jQueryUI datepicker.
 
 ### items
 Array of items to display in the menu.
@@ -74,26 +76,24 @@ You can both return a normal array and use the return callback if you wish.
 The order of items will be undefined (though may be sorted in a parent
 callback).
 
-### render (undefined)
+### render (`undefined`)
 Optional fallback `render` callback, if no `render` callback specified for the
 individual item, to render the items' HTML.
 If no `render` callback is specified, the label of the item will be used.
 The `render` callback will receive the entire item structure as it's first and
 only argument.
 
-### showAnim ('show')
-See jQueryUI datepicker
+### showAnim (`"show"`)
+The animation type used to show and hide the menu.
 
-### showOptions ({})
-See jQueryUI datepicker
+See jQueryUI datepicker.
+
+### showOptions (`{}`)
+Options for the animation to show/hide the menu.
+
+See jQueryUI datepicker.
 
 Events
 ------
-### select (undefined)
-Callback
-
-Future
-------
-*Close upon hiding/destruction of element (handle dialogs closing while open)
-*Test explicit (manual) open/close
-*Include HTML-item-parsers in code
+### select (`undefined`)
+Function called whenever an item is selected.

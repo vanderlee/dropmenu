@@ -18,7 +18,7 @@
     $.widget("vanderlee.dropmenu", {
 		options: {
 			'closeOnSelect':	true,
-			'duration':			'normal',
+			'duration':			0,
             'items':			[],
 			'render':			undefined,
 			'showAnim':			'show',
@@ -155,12 +155,14 @@
 						if (element.offsetWidth > element.clientWidth) {
 							content.css('width', element.offsetWidth + (element.offsetWidth - element.clientWidth) + 1);
 						}						
+						$(this).addClass('dropmenu-open');
 					},
 					mouseleave: function() {
 						var oldSubmenu = submenu;
 						that._hide(oldSubmenu, function() {
 							oldSubmenu.remove();
 						});
+						$(this).removeClass('dropmenu-open');
 					}
 				});
 			}
