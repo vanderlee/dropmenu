@@ -9,8 +9,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.js"></script>
 
 		<!-- Dropmenu -->
-		<script src="jquery.dropmenu.js"></script>
-		<link href="jquery.dropmenu.css" rel="stylesheet" type="text/css"/>
+		<script src="../jquery.dropmenu.js"></script>
+		<link href="../jquery.dropmenu.css" rel="stylesheet" type="text/css"/>
 
 		<style>
 			body {
@@ -70,12 +70,12 @@
 						{	name:	'vermillion' },
 						{	label:	'<i>Ultimate</i> winner&hellip;',
 							items:	[
-								{	name: 'alien',		render: renderImage,	image: 'demo/alien.png'	},
-								{	name: 'superhero',	render: renderImage,	image: 'demo/superhero.png'	},
-								{	name: 'guy',		render: renderImage,	image: 'demo/guy.png'	},
-								{	name: 'ninja',		render: renderImage,	image: 'demo/ninja.png'	},
-								{	name: 'robot',		render: renderImage,	image: 'demo/robot.png'	},
-								{	name: 'trekkie',	render: renderImage,	image: 'demo/trekkie.png'	}
+								{	name: 'alien',		render: renderImage,	image: 'alien.png'	},
+								{	name: 'superhero',	render: renderImage,	image: 'superhero.png'	},
+								{	name: 'guy',		render: renderImage,	image: 'guy.png'	},
+								{	name: 'ninja',		render: renderImage,	image: 'ninja.png'	},
+								{	name: 'robot',		render: renderImage,	image: 'robot.png'	},
+								{	name: 'trekkie',	render: renderImage,	image: 'trekkie.png'	}
 							]
 						},
 						{	name:	'blue' }
@@ -87,12 +87,12 @@
 
 				$('#winners').dropmenu({
 					items:		[
-									{	name: 'alien',		image: 'demo/alien.png'	},
-									{	name: 'superhero',	image: 'demo/superhero.png'	},
-									{	name: 'guy',		image: 'demo/guy.png'	},
-									{	name: 'ninja',		image: 'demo/ninja.png'	},
-									{	name: 'robot',		image: 'demo/robot.png'	},
-									{	name: 'trekkie',	image: 'demo/trekkie.png'	}
+									{	name: 'alien',		image: 'alien.png'	},
+									{	name: 'superhero',	image: 'superhero.png'	},
+									{	name: 'guy',		image: 'guy.png'	},
+									{	name: 'ninja',		image: 'ninja.png'	},
+									{	name: 'robot',		image: 'robot.png'	},
+									{	name: 'trekkie',	image: 'trekkie.png'	}
 								],
 					render:		renderImage,
 					showAnim:	'slideDown',
@@ -201,7 +201,7 @@
 		<hr/>
 		
 		<h3>Image with image selection</h3>
-		<img id="winners" class="button" src="demo/alien.png"/>
+		<img id="winners" class="button" src="alien.png"/>
 
 		<hr/>
 		
@@ -214,7 +214,7 @@
 		<button id="hidden-menu">Click to list these HTML items&hellip;</button>
 		<button id="toggle-hidden-items">Toggle hidden items</button>
 		<div id="hidden-items" style="display:none;">
-			<i title="Ninja versus robot"><img src="demo/ninja.png" width="16" height="16"/> versus <img src="demo/robot.png" width="16" height="16"/></i>
+			<i title="Ninja versus robot"><img src="ninja.png" width="16" height="16"/> versus <img src="robot.png" width="16" height="16"/></i>
 			<span>This is some plain text</span>
 			<div style="border: dashed thin red">Bordered?</div>
 		</div>
