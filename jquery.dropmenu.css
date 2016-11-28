@@ -24,6 +24,7 @@
 	white-space:		nowrap;
     text-overflow:		ellipsis;
 	color:				GrayText;
+	cursor:				default;	
 }
 
 .dropmenu-item:hover {
@@ -32,7 +33,6 @@
 
 .dropmenu-item.dropmenu-selectable {
 	color:				MenuText;
-	cursor:				pointer;
 }
 
 .dropmenu-item.dropmenu-selectable:hover {

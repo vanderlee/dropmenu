@@ -1,6 +1,6 @@
 jQuery.dropmenu
 ===============
-v1.1.0
+v1.1.1
 
 Copyright &copy; 2013-2016 Martijn W. van der Lee (http://martijn.vanderlee.com).
 Licensed under the MIT.
